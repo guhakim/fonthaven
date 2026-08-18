@@ -213,11 +213,22 @@
   input[type="range"]{
     width:100%; accent-color:var(--pink); cursor:pointer; height:1.1rem;
   }
-  .swatches{ display:flex; gap:.6rem; }
+  .swatches{ display:flex; gap:.6rem; flex-wrap:wrap; }
   .swatch{
     width:2.1rem; height:2.1rem; cursor:pointer; border:3px solid var(--line);
   }
   .swatch.active{ box-shadow:3px 3px 0 var(--shadow-c); }
+  .swatch-custom{ position:relative; display:block; overflow:hidden; }
+  .swatch-custom input[type="color"]{
+    position:absolute; inset:-4px; width:calc(100% + 8px); height:calc(100% + 8px);
+    border:none; padding:0; cursor:pointer; opacity:0;
+  }
+  .palette-row{ display:flex; gap:.4rem; margin-top:.7rem; flex-wrap:wrap; }
+  .palette-swatch{
+    width:1.5rem; height:1.5rem; cursor:pointer; border:2px solid var(--line);
+    transition:transform .08s;
+  }
+  .palette-swatch:hover{ transform:translateY(-2px); }
 
   /* ---- screen 5: typing test ---- */
   .type-pane{ padding:1.75rem; }
@@ -418,7 +429,11 @@
             <div class="swatch" style="background:#3f8cff" data-color="#3f8cff"></div>
             <div class="swatch" style="background:#7ce07c" data-color="#2f8a2f"></div>
             <div class="swatch" style="background:#ffd23f" data-color="#b8860b"></div>
+            <label class="swatch swatch-custom" title="직접 색상 고르기" style="background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red);">
+              <input type="color" id="colorPicker" value="#111111">
+            </label>
           </div>
+          <div id="colorPalette" class="palette-row"></div>
         </div>
       </div>
     </div>
@@ -833,7 +848,7 @@
   });
   window.addEventListener('mouseup', () => { dragging = false; });
 
-  document.querySelectorAll('.swatch').forEach(s=>{
+  document.querySelectorAll('.swatch:not(.swatch-custom)').forEach(s=>{
     s.addEventListener('click', ()=>{
       document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active'));
       s.classList.add('active');
@@ -841,6 +856,44 @@
       applyStyleEverywhere();
     });
   });
+
+  // 색상 팔레트: 직접 고른 색을 기준으로 밝기 단계별 톤 6개를 자동 생성
+  function mixColor(hex, target, amount) {
+    const n = parseInt(hex.replace('#',''), 16);
+    const r = (n >> 16) & 0xff, g = (n >> 8) & 0xff, b = n & 0xff;
+    const t = parseInt(target.replace('#',''), 16);
+    const tr = (t >> 16) & 0xff, tg = (t >> 8) & 0xff, tb = t & 0xff;
+    const mr = Math.round(r + (tr - r) * amount);
+    const mg = Math.round(g + (tg - g) * amount);
+    const mb = Math.round(b + (tb - b) * amount);
+    return '#' + [mr, mg, mb].map(v => v.toString(16).padStart(2, '0')).join('');
+  }
+  function renderColorPalette(baseHex) {
+    const steps = [0.6, 0.3, 0.15, -0.2, -0.4, -0.6];
+    const palette = document.getElementById('colorPalette');
+    palette.innerHTML = '';
+    steps.forEach(amount => {
+      const c = amount > 0 ? mixColor(baseHex, '#ffffff', amount) : mixColor(baseHex, '#000000', -amount);
+      const sw = document.createElement('div');
+      sw.className = 'palette-swatch';
+      sw.style.background = c;
+      sw.addEventListener('click', () => {
+        currentColor = c;
+        document.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
+        applyStyleEverywhere();
+      });
+      palette.appendChild(sw);
+    });
+  }
+
+  const colorPicker = document.getElementById('colorPicker');
+  colorPicker.addEventListener('input', () => {
+    document.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
+    currentColor = colorPicker.value;
+    renderColorPalette(currentColor);
+    applyStyleEverywhere();
+  });
+  renderColorPalette('#111111');
 
   applyStyleEverywhere();
 
