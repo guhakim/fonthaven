@@ -196,10 +196,13 @@
   .preview-pane{
     background:var(--panel); padding:2.2rem 1.6rem; display:flex; align-items:center;
     justify-content:center; min-height:220px;
+    perspective:900px; cursor:grab;
   }
+  .preview-pane:active{ cursor:grabbing; }
   #livePreview{
     font-family:'Noto Sans KR', sans-serif; text-align:center; line-height:1.5;
     transition:font-weight .1s, font-size .1s, color .1s;
+    transform-style:preserve-3d;
   }
   .controls{ display:flex; flex-direction:column; gap:1.3rem; padding:1.6rem; }
   .control-row label{
@@ -366,7 +369,7 @@
     <h1 class="page-title">스타일 다듬기</h1>
     <p class="page-desc">굵기, 크기, 색상을 조절하며 원하는 느낌을 맞춰보세요.</p>
     <div class="customize-layout">
-      <div class="block preview-pane">
+      <div class="block preview-pane" id="previewPane">
         <div id="livePreview">안녕하세요<br>반갑습니다</div>
       </div>
       <div class="block controls">
@@ -381,6 +384,11 @@
         <div class="control-row">
           <label>기울기 <span id="skewVal">0°</span></label>
           <input type="range" id="skewRange" min="-10" max="10" step="1" value="0">
+        </div>
+        <div class="control-row">
+          <label>3D 회전 <span id="rotateVal">0°</span></label>
+          <input type="range" id="rotateRange" min="-60" max="60" step="1" value="0">
+          <div style="font-family:'IBM Plex Mono', monospace; font-size:.65rem; opacity:.6; margin-top:.3rem;">미리보기 글자를 직접 드래그해서 돌려도 됩니다</div>
         </div>
         <div class="control-row">
           <label>색상</label>
@@ -703,6 +711,7 @@
   const weightRange = document.getElementById('weightRange');
   const sizeRange = document.getElementById('sizeRange');
   const skewRange = document.getElementById('skewRange');
+  const rotateRange = document.getElementById('rotateRange');
   const preview = document.getElementById('livePreview');
   const typeInput = document.getElementById('typeInput');
   typeInput.addEventListener('input', () => { typingEdited = true; });
@@ -714,6 +723,7 @@
     const weight = weightRange.value;
     const size = sizeRange.value;
     const skew = skewRange.value;
+    const rotate = rotateRange.value;
     const style = STYLE_SETS[currentLang][selectedSample];
 
     // 04 미리보기 글씨를 01 "폰트 미리보기 글씨" 입력값과 항상 동일하게 유지
@@ -724,12 +734,13 @@
     preview.style.fontFamily = style.family;
     preview.style.fontWeight = weight;
     preview.style.fontSize = size + 'rem';
-    preview.style.transform = `skewX(${-skew}deg)`;
+    preview.style.transform = `skewX(${-skew}deg) rotateY(${rotate}deg)`;
     preview.style.color = currentColor;
 
     document.getElementById('weightVal').textContent = weight;
     document.getElementById('sizeVal').textContent = size + 'rem';
     document.getElementById('skewVal').textContent = skew + '°';
+    document.getElementById('rotateVal').textContent = rotate + '°';
 
     // 03 선택 + 04 커스텀에서 정한 스타일을 05 타이핑 화면에도 그대로 반영
     typeInput.style.fontFamily = style.family;
@@ -739,7 +750,24 @@
 
     styleChip.textContent = `초안${String(selectedSample).padStart(2,'0')} · ${style.label} · 굵기${weight} · ${currentColor}`;
   }
-  [weightRange, sizeRange, skewRange].forEach(r=>r.addEventListener('input', applyStyleEverywhere));
+  [weightRange, sizeRange, skewRange, rotateRange].forEach(r=>r.addEventListener('input', applyStyleEverywhere));
+
+  // 미리보기 글자를 마우스로 직접 드래그해서 3D 회전
+  const previewPane = document.getElementById('previewPane');
+  let dragging = false, dragStartX = 0, dragStartRotate = 0;
+  previewPane.addEventListener('mousedown', (e) => {
+    dragging = true;
+    dragStartX = e.clientX;
+    dragStartRotate = +rotateRange.value;
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const delta = (e.clientX - dragStartX) * 0.4;
+    let next = Math.max(-60, Math.min(60, dragStartRotate + delta));
+    rotateRange.value = Math.round(next);
+    applyStyleEverywhere();
+  });
+  window.addEventListener('mouseup', () => { dragging = false; });
 
   document.querySelectorAll('.swatch').forEach(s=>{
     s.addEventListener('click', ()=>{
