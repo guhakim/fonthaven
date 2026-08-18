@@ -1,0 +1,749 @@
+<title>폰트 천국</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gowun+Batang:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@400;700;900&family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Pen+Script&family=Nanum+Brush+Script&family=Gowun+Dodum&family=East+Sea+Dokdo&family=Hi+Melody&family=Yeon+Sung&family=Gamja+Flower&family=Kirang+Haerang&family=Gugi&family=Sunflower:wght@300;500;700&family=Single+Day&family=Work+Sans:wght@500;700;900&family=Gaegu:wght@400;700&family=Song+Myung&family=Stylish&family=Jua&family=Playfair+Display:wght@400..900&family=Anton&family=Pacifico&family=Inter:wght@100..900&family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=Space+Mono:wght@400;700&family=Merriweather:wght@400;700;900&family=Press+Start+2P&family=Creepster&family=UnifrakturMaguntia&family=Permanent+Marker&family=Righteous&family=Orbitron:wght@400..900&family=Special+Elite&family=Caveat:wght@400..700&family=Rubik+Wet+Paint&family=Nosifer&family=Monoton&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #f2efe4;
+    --panel:     #ffffff;
+    --ink:       #111111;
+    --yellow:    #ffd23f;
+    --pink:      #ff5d8f;
+    --blue:      #3f8cff;
+    --green:     #7ce07c;
+    --line:      #111111;
+    --shadow-c:  #111111;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:      #131313;
+      --panel:   #1c1c1c;
+      --ink:     #f4f2ea;
+      --yellow:  #ffd23f;
+      --pink:    #ff5d8f;
+      --blue:    #5c9eff;
+      --green:   #7ce07c;
+      --line:    #f4f2ea;
+      --shadow-c:#000000;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:      #131313;
+    --panel:   #1c1c1c;
+    --ink:     #f4f2ea;
+    --yellow:  #ffd23f;
+    --pink:    #ff5d8f;
+    --blue:    #5c9eff;
+    --green:   #7ce07c;
+    --line:    #f4f2ea;
+    --shadow-c:#000000;
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Work Sans', -apple-system, sans-serif;
+  }
+  ::selection{ background:var(--pink); color:#111; }
+  :focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
+
+  .app{ max-width:1000px; margin:0 auto; padding:1.75rem 1.25rem 5rem; }
+
+  /* shared brutalist primitives */
+  .block{
+    background:var(--panel); border:3px solid var(--line);
+    box-shadow:6px 6px 0 var(--shadow-c);
+  }
+  .block-sm{ box-shadow:4px 4px 0 var(--shadow-c); }
+
+  /* ---- topbar ---- */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    padding:1rem 1.25rem; margin-bottom:1.5rem;
+    background:var(--yellow); border:3px solid var(--line); box-shadow:6px 6px 0 var(--shadow-c);
+  }
+  .brand{ display:flex; align-items:center; gap:.7rem; }
+  .brand .mark{
+    font-family:'Black Han Sans', sans-serif; font-size:1.7rem; color:#111;
+    letter-spacing:.01em;
+  }
+  .brand .sub{
+    font-family:'IBM Plex Mono', monospace; font-size:.68rem; font-weight:700;
+    color:#111; background:#fff; border:2px solid #111; padding:.15rem .5rem;
+  }
+  .step-indicator{
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:.85rem; color:#111;
+  }
+
+  /* ---- stepper rail ---- */
+  .rail{ display:flex; gap:.6rem; margin-bottom:2rem; flex-wrap:wrap; }
+  .rail button{
+    flex:1; min-width:5.5rem; padding:.6rem .4rem;
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:.68rem;
+    background:var(--panel); color:var(--ink); border:3px solid var(--line);
+    cursor:pointer; box-shadow:4px 4px 0 var(--shadow-c);
+    transition:transform .08s, box-shadow .08s;
+  }
+  .rail button:hover{ transform:translate(-1px,-1px); box-shadow:5px 5px 0 var(--shadow-c); }
+  .rail button:active{ transform:translate(2px,2px); box-shadow:1px 1px 0 var(--shadow-c); }
+  .rail button.active{ background:var(--ink); color:var(--bg); }
+
+  .screen{ display:none; }
+  .screen.active{ display:block; animation:pop .25s steps(4); }
+  @keyframes pop{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+  @media (prefers-reduced-motion: reduce){ .screen.active{ animation:none; } }
+
+  h1.page-title{
+    font-family:'Black Han Sans', sans-serif; font-weight:400;
+    font-size:clamp(1.7rem, 4vw, 2.5rem); line-height:1.15;
+    margin:0 0 .5rem; text-wrap:balance;
+  }
+  p.page-desc{
+    font-size:.95rem; margin:0 0 1.75rem; max-width:38em; font-weight:500;
+  }
+
+  /* ---- screen 1: prompt ---- */
+  .prompt-card{ padding:1.75rem; margin-bottom:0; }
+  label.field-label{
+    display:inline-block; font-family:'IBM Plex Mono', monospace; font-weight:700;
+    font-size:.75rem; margin-bottom:.6rem; background:var(--blue); color:#fff;
+    padding:.2rem .6rem; border:2px solid var(--line);
+  }
+  textarea.prompt-input{
+    display:block; width:100%; min-height:5rem; padding:.9rem 1rem; font-size:1.05rem;
+    font-family:'Work Sans', sans-serif; font-weight:600; color:var(--ink);
+    background:var(--bg); border:3px solid var(--line); resize:vertical; line-height:1.6;
+  }
+  textarea.prompt-input:focus{ outline:none; box-shadow:4px 4px 0 var(--shadow-c); }
+  .tags{ display:flex; flex-wrap:wrap; gap:.6rem; margin:1.1rem 0 1.6rem; }
+  .tag{
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:.72rem;
+    padding:.4rem .8rem; border:2px solid var(--line); background:var(--panel);
+    color:var(--ink); cursor:pointer; transition:transform .08s;
+  }
+  .tag:hover{ transform:translate(-1px,-1px); }
+  .tag.on{ background:var(--pink); color:#fff; }
+
+  .btn-row{ display:flex; gap:.85rem; align-items:center; flex-wrap:wrap; margin-top:1.6rem; }
+  .btn{
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:.85rem;
+    padding:.8rem 1.5rem; border:3px solid var(--line); cursor:pointer;
+    box-shadow:5px 5px 0 var(--shadow-c); transition:transform .08s, box-shadow .08s;
+    text-transform:uppercase; letter-spacing:.02em;
+  }
+  .btn:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--shadow-c); }
+  .btn:active{ transform:translate(3px,3px); box-shadow:1px 1px 0 var(--shadow-c); }
+  .btn-primary{ background:var(--pink); color:#fff; }
+  .btn-secondary{ background:var(--green); color:#111; }
+  .btn-ghost{ background:var(--panel); color:var(--ink); }
+
+  .upload-hint{
+    margin-top:1.8rem; padding-top:1.4rem; border-top:3px dashed var(--line);
+    font-size:.85rem; font-weight:600; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:.6rem;
+  }
+  .badge-soon{
+    font-family:'IBM Plex Mono', monospace; font-size:.62rem; font-weight:700;
+    background:var(--yellow); color:#111; border:2px solid var(--line); padding:.2rem .55rem;
+  }
+
+  /* ---- screen 2: loading ---- */
+  .loading-wrap{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:4rem 1rem; text-align:center;
+  }
+  .brush{
+    font-family:'Black Han Sans', sans-serif; font-size:4rem; color:var(--ink);
+    background:var(--yellow); border:3px solid var(--line); box-shadow:6px 6px 0 var(--shadow-c);
+    width:6rem; height:6rem; display:flex; align-items:center; justify-content:center;
+    animation:jiggle 1.1s steps(6) infinite;
+  }
+  @keyframes jiggle{
+    0%,100%{ transform:rotate(-4deg); } 50%{ transform:rotate(4deg); }
+  }
+  @media (prefers-reduced-motion: reduce){ .brush{ animation:none; } }
+  .loading-wrap p{ margin-top:1.3rem; font-weight:700; font-family:'IBM Plex Mono', monospace; font-size:.85rem; }
+
+  /* ---- screen 3: samples ---- */
+  .sample-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:1.1rem; margin-bottom:2rem; }
+  @media (max-width:600px){ .sample-grid{ grid-template-columns:1fr; } }
+  .sample-card{
+    padding:1.6rem; cursor:pointer; text-align:center;
+    background:var(--panel); border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow-c);
+    transition:transform .08s, box-shadow .08s, background .1s;
+  }
+  .sample-card:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--shadow-c); }
+  .sample-card.selected{ background:var(--yellow); box-shadow:2px 2px 0 var(--shadow-c); transform:translate(3px,3px); }
+  .sample-card .glyphs{ font-size:2.2rem; margin-bottom:.7rem; }
+  .sample-card .ai-thumb{ width:100%; aspect-ratio:1; object-fit:cover; border:2px solid var(--line); margin-bottom:.7rem; }
+  .g1{ font-family:'Gowun Batang', serif; font-weight:700; }
+  .g2{ font-family:'Black Han Sans', sans-serif; }
+  .g3{ font-family:'Do Hyeon', sans-serif; }
+  .g4{ font-family:'Nanum Gothic', sans-serif; font-weight:800; letter-spacing:-.02em; }
+  .sample-card .label{
+    font-family:'IBM Plex Mono', monospace; font-size:.7rem; font-weight:700;
+    text-transform:uppercase;
+  }
+  .sample-card .check{
+    display:inline-block; margin-top:.6rem; font-size:.72rem; font-weight:700;
+    font-family:'IBM Plex Mono', monospace; visibility:hidden;
+  }
+  .sample-card.selected .check{ visibility:visible; }
+
+  /* ---- screen 4: customize ---- */
+  .customize-layout{ display:grid; grid-template-columns:1.1fr 1fr; gap:1.5rem; }
+  @media (max-width:700px){ .customize-layout{ grid-template-columns:1fr; } }
+  .preview-pane{
+    background:var(--panel); padding:2.2rem 1.6rem; display:flex; align-items:center;
+    justify-content:center; min-height:220px;
+  }
+  #livePreview{
+    font-family:'Noto Sans KR', sans-serif; text-align:center; line-height:1.5;
+    transition:font-weight .1s, font-size .1s, color .1s;
+  }
+  .controls{ display:flex; flex-direction:column; gap:1.3rem; padding:1.6rem; }
+  .control-row label{
+    display:flex; justify-content:space-between; font-size:.82rem; font-weight:700;
+    font-family:'IBM Plex Mono', monospace; margin-bottom:.5rem;
+  }
+  .control-row label span{ color:var(--pink); }
+  input[type="range"]{
+    width:100%; accent-color:var(--pink); cursor:pointer; height:1.1rem;
+  }
+  .swatches{ display:flex; gap:.6rem; }
+  .swatch{
+    width:2.1rem; height:2.1rem; cursor:pointer; border:3px solid var(--line);
+  }
+  .swatch.active{ box-shadow:3px 3px 0 var(--shadow-c); }
+
+  /* ---- screen 5: typing test ---- */
+  .type-pane{ padding:1.75rem; }
+  #typeInput{
+    width:100%; border:none; background:transparent; outline:none; resize:none;
+    min-height:8rem; font-size:1.7rem; line-height:1.7; color:var(--ink);
+  }
+  .type-pane-footer{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.75rem;
+    border-top:3px solid var(--line); padding-top:1rem; margin-top:.5rem;
+  }
+  .style-chip{
+    font-family:'IBM Plex Mono', monospace; font-size:.72rem; font-weight:700;
+    background:var(--blue); color:#fff; padding:.3rem .6rem; border:2px solid var(--line);
+  }
+
+  /* ---- screen 6: build ---- */
+  .build-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; margin-bottom:1.75rem; }
+  @media (max-width:600px){ .build-grid{ grid-template-columns:1fr; } }
+  .build-item{
+    padding:1.3rem; display:flex; align-items:center; gap:.9rem;
+  }
+  .build-item .num{
+    font-family:'Black Han Sans', sans-serif; font-size:1.6rem; background:var(--ink); color:var(--bg);
+    width:2.6rem; height:2.6rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .build-item .txt{ font-size:.85rem; font-weight:600; }
+  .build-item .txt b{ display:block; font-family:'IBM Plex Mono', monospace; font-size:.72rem; text-transform:uppercase; margin-bottom:.2rem; }
+  .progress-block{ padding:1.75rem; text-align:center; }
+  .progress-track{
+    height:1.4rem; border:3px solid var(--line); background:var(--bg); margin:1rem 0; overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; width:72%; background:repeating-linear-gradient(45deg, var(--green), var(--green) 10px, #5fc95f 10px, #5fc95f 20px);
+  }
+  .progress-label{ font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:.8rem; }
+
+  /* ---- screen 7: download ---- */
+  .download-block{ padding:2rem; text-align:center; }
+  .file-chip{
+    display:inline-flex; align-items:center; gap:.7rem; padding:1rem 1.4rem;
+    background:var(--yellow); border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow-c);
+    font-family:'IBM Plex Mono', monospace; font-weight:700; margin:1.2rem 0 1.6rem;
+  }
+  .file-chip .ext{
+    background:#111; color:var(--yellow); padding:.25rem .5rem; font-size:.75rem;
+  }
+  .install-steps{ text-align:left; max-width:32em; margin:0 auto 1.5rem; }
+  .install-steps li{ font-size:.88rem; font-weight:500; margin-bottom:.5rem; }
+  .format-row{ display:flex; gap:.8rem; justify-content:center; flex-wrap:wrap; margin-top:1.2rem; }
+  .format-pill{
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:.75rem;
+    border:2px solid var(--line); padding:.4rem .8rem; background:var(--panel);
+  }
+
+  /* ---- screen 8: library ---- */
+  .lib-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; }
+  @media (max-width:700px){ .lib-grid{ grid-template-columns:repeat(2,1fr); } }
+  .lib-card{
+    aspect-ratio:1; background:var(--panel); border:3px solid var(--line); box-shadow:5px 5px 0 var(--shadow-c);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem;
+    cursor:pointer; transition:transform .08s, box-shadow .08s;
+  }
+  .lib-card:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--shadow-c); }
+  .lib-card .lib-glyph{ font-size:1.9rem; }
+  .lib-card .lib-name{ font-family:'IBM Plex Mono', monospace; font-size:.7rem; font-weight:700; }
+  .lib-card.new{ border-style:dashed; background:transparent; box-shadow:none; }
+  .lib-card.new .plus{ font-size:1.8rem; color:var(--pink); font-weight:900; }
+
+  footer.note{
+    margin-top:2.5rem; padding:1rem 1.25rem;
+    background:var(--ink); color:var(--bg); border:3px solid var(--line);
+    font-family:'IBM Plex Mono', monospace; font-size:.75rem; font-weight:700;
+    display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  }
+</style>
+
+<div class="app">
+  <div class="topbar">
+    <div class="brand">
+      <span class="mark">폰트 천국</span>
+      <span class="sub">FONT HAVEN</span>
+    </div>
+    <div class="step-indicator">STEP <span id="stepNum">1</span>/7</div>
+  </div>
+
+  <div class="rail" id="rail">
+    <button data-target="s1" class="active">01 입력</button>
+    <button data-target="s2">02 생성</button>
+    <button data-target="s3">03 선택</button>
+    <button data-target="s4">04 커스텀</button>
+    <button data-target="s5">05 타이핑</button>
+    <button data-target="s6">06 폰트제작</button>
+    <button data-target="s7">07 다운로드</button>
+    <button data-target="s8">08 보관함</button>
+  </div>
+
+  <!-- SCREEN 1 -->
+  <section class="screen active" id="s1">
+    <h1 class="page-title">어떤 느낌의 폰트를 원해?</h1>
+    <p class="page-desc">한 문장으로 설명하면 AI가 스타일 초안을 만들어줍니다.</p>
+    <div class="block prompt-card">
+      <label class="field-label">언어</label>
+      <div class="tags" id="langToggle" style="margin-bottom:1.1rem;">
+        <button class="tag lang-tag on" data-lang="ko">KO 한글</button>
+        <button class="tag lang-tag" data-lang="en">EN 영문</button>
+      </div>
+      <label class="field-label" for="promptBox">폰트 미리보기 글씨</label>
+      <textarea id="promptBox" class="prompt-input" placeholder="예: 안녕하세요! 반갑습니다.">안녕하세요! 반갑습니다.</textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goTo('s2')">샘플 생성하기</button>
+        <button class="btn btn-ghost" onclick="goTo('s8')">내 보관함 보기</button>
+      </div>
+      <div class="upload-hint">
+        <span>또는 이미지를 올려서 스타일 분석부터 시작하기</span>
+        <span class="badge-soon">2단계 예정</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 2 -->
+  <section class="screen" id="s2">
+    <div class="loading-wrap">
+      <div class="brush" id="brushIcon">한</div>
+      <p id="loadingText">AI가 "안녕하세요! 반갑습니다."과 비슷한 폰트를 찾는 중…</p>
+      <div class="progress-track" style="width:20rem; margin-top:1rem;">
+        <div class="progress-fill" id="loadingFill" style="width:0%"></div>
+      </div>
+      <div class="progress-label" id="loadingPct" style="margin-top:.6rem">0%</div>
+    </div>
+  </section>
+
+  <!-- SCREEN 3 -->
+  <section class="screen" id="s3">
+    <h1 class="page-title">마음에 드는 스타일을 골라</h1>
+    <p class="page-desc">AI가 선택한 스타일과 비슷한 무료 구글 폰트를 찾아서 보여줍니다. 마음에 드는 걸 고르면 다음 단계에서 굵기·색상·크기를 자유롭게 조절할 수 있어요.<br>
+    <span style="font-family:'IBM Plex Mono', monospace; font-size:.72rem; font-weight:700; color:var(--pink);">
+    ※ 이미지를 새로 그리는 게 아니라, 실제로 존재하는 무료 한글 폰트 중에서 스타일이 비슷한 걸 찾아 추천하는 방식입니다.</span></p>
+    <div class="sample-grid" id="sampleGrid">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goTo('s4')">이 스타일로 계속하기</button>
+      <button class="btn btn-ghost" onclick="goTo('s1')">다시 생성하기</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 4 -->
+  <section class="screen" id="s4">
+    <h1 class="page-title">스타일 다듬기</h1>
+    <p class="page-desc">굵기, 크기, 색상을 조절하며 원하는 느낌을 맞춰보세요.</p>
+    <div class="customize-layout">
+      <div class="block preview-pane">
+        <div id="livePreview">안녕하세요<br>반갑습니다</div>
+      </div>
+      <div class="block controls">
+        <div class="control-row">
+          <label>굵기 <span id="weightVal">700</span></label>
+          <input type="range" id="weightRange" min="100" max="900" step="10" value="700">
+        </div>
+        <div class="control-row">
+          <label>크기 <span id="sizeVal">2.2rem</span></label>
+          <input type="range" id="sizeRange" min="1.4" max="3.2" step="0.1" value="2.2">
+        </div>
+        <div class="control-row">
+          <label>기울기 <span id="skewVal">0°</span></label>
+          <input type="range" id="skewRange" min="-10" max="10" step="1" value="0">
+        </div>
+        <div class="control-row">
+          <label>색상</label>
+          <div class="swatches">
+            <div class="swatch active" style="background:#111111" data-color="#111111"></div>
+            <div class="swatch" style="background:#ff5d8f" data-color="#ff5d8f"></div>
+            <div class="swatch" style="background:#3f8cff" data-color="#3f8cff"></div>
+            <div class="swatch" style="background:#7ce07c" data-color="#2f8a2f"></div>
+            <div class="swatch" style="background:#ffd23f" data-color="#b8860b"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row" style="margin-top:1.6rem">
+      <button class="btn btn-ghost" onclick="goTo('s3')">이전</button>
+      <button class="btn btn-primary" onclick="goTo('s5')">다음: 타이핑 테스트</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 5 -->
+  <section class="screen" id="s5">
+    <h1 class="page-title">직접 타이핑해서 확인해봐</h1>
+    <p class="page-desc">입력하는 대로 완성된 스타일이 실시간으로 반영됩니다.</p>
+    <div class="block type-pane">
+      <textarea id="typeInput" placeholder="여기에 아무 문장이나 입력해 보세요">안녕하세요! 반갑습니다.</textarea>
+      <div class="type-pane-footer">
+        <span class="style-chip" id="styleChip">초안01 · 굵기700 · #111111</span>
+        <div class="btn-row">
+          <button class="btn btn-ghost" onclick="goTo('s4')">다시 다듬기</button>
+          <button class="btn btn-primary" onclick="goTo('s6')">이 스타일로 폰트 제작</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 6: build -->
+  <section class="screen" id="s6">
+    <h1 class="page-title">폰트 파일 연결 준비</h1>
+    <p class="page-desc">
+      직접 새 폰트 파일을 만드는 건 아직 이 프로토타입에 없습니다. 대신 지금 고른 스타일과 실제로 같은
+      무료 구글 폰트의 정품 다운로드 페이지로 연결합니다 — 그래서 다음 화면의 링크는 진짜로 작동합니다.
+    </p>
+    <div class="build-grid">
+      <div class="block build-item">
+        <div class="num">1</div>
+        <div class="txt"><b>자소 확장</b>초/중/종성 조합으로 전체 글자 생성 (실제 신규 폰트 제작 시 필요한 단계 — 참고용 설명)</div>
+      </div>
+      <div class="block build-item">
+        <div class="num">2</div>
+        <div class="txt"><b>벡터화</b>손글씨 획을 폰트용 외곽선으로 변환 (참고용 설명)</div>
+      </div>
+      <div class="block build-item">
+        <div class="num">3</div>
+        <div class="txt"><b>자간/정렬</b>글자별 균형 자동 보정 (참고용 설명)</div>
+      </div>
+      <div class="block build-item">
+        <div class="num">4</div>
+        <div class="txt"><b>파일 조립</b>TTF/OTF/WOFF2로 패키징 (참고용 설명)</div>
+      </div>
+    </div>
+    <div class="block progress-block">
+      <div class="progress-label" id="buildSummary" style="margin-bottom:1.4rem;">선택한 폰트: 고운바탕</div>
+      <button class="btn btn-primary" onclick="goTo('s7')">다운로드 페이지로 이동</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 7: download -->
+  <section class="screen" id="s7">
+    <h1 class="page-title">고른 스타일, 여기서 진짜로 받아</h1>
+    <p class="page-desc">아래 버튼을 누르면 우리 사이트 자체 API가 진짜 폰트 파일을 즉시 내려줍니다 — 외부 사이트로 안 나갑니다.</p>
+    <div class="block download-block">
+      <div class="file-chip" id="downloadChip">고운바탕 <span class="ext">Gowun Batang</span></div>
+      <ol class="install-steps">
+        <li>1. 아래 버튼을 누르면 이 사이트에서 바로 파일이 다운로드된다.</li>
+        <li>2. 다운로드된 폰트 파일을 더블클릭해서 [설치]를 누른다. (Mac: Font Book / Windows: 설치)</li>
+        <li>3. 워드·포토샵 등 모든 프로그램의 글꼴 목록에서 바로 선택할 수 있다.</li>
+      </ol>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn-primary" id="downloadLinkTtf" href="#" style="text-decoration:none; display:inline-block;">.TTF 다운로드 →</a>
+        <a class="btn btn-secondary" id="downloadLinkWoff2" href="#" style="text-decoration:none; display:inline-block;">.WOFF2 다운로드 →</a>
+        <button class="btn btn-ghost" onclick="goTo('s8')">보관함에 저장</button>
+      </div>
+      <div class="format-row">
+        <span class="format-pill">무료 · 상업적 이용 가능 (SIL OFL)</span>
+        <span class="format-pill">우리 사이트 API에서 실시간으로 원본 폰트 파일을 가져와 전달</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 8: library -->
+  <section class="screen" id="s8">
+    <h1 class="page-title">내 폰트 보관함</h1>
+    <p class="page-desc">완성한 폰트를 다시 내려받거나 새 스타일을 시작하세요.</p>
+    <div class="lib-grid">
+      <div class="lib-card">
+        <div class="lib-glyph g1">가</div>
+        <div class="lib-name">둥근명조 A · .TTF</div>
+      </div>
+      <div class="lib-card">
+        <div class="lib-glyph g2">가</div>
+        <div class="lib-name">볼드고딕 B · .TTF</div>
+      </div>
+      <div class="lib-card new" onclick="goTo('s1')">
+        <div class="plus">+</div>
+        <div class="lib-name">새로 만들기</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="note">
+    <span>이 프로토타입은 디자인·화면 흐름 검토용이며, AI 폰트 생성 기능은 아직 실제 구현되지 않았습니다</span>
+    <span>Prototype v0.3 · Neo-Brutalism</span>
+  </footer>
+</div>
+
+<script>
+  const screens = ['s1','s2','s3','s4','s5','s6','s7','s8'];
+  let loadingTimer = null;
+
+  function goTo(id){
+    screens.forEach(s => document.getElementById(s).classList.toggle('active', s===id));
+    document.querySelectorAll('#rail button').forEach(b => b.classList.toggle('active', b.dataset.target===id));
+    document.getElementById('stepNum').textContent = screens.indexOf(id)+1;
+    window.scrollTo({top:0, behavior:'smooth'});
+    if (id === 's2') runRealLoading();
+    else clearInterval(loadingTimer);
+    if (id === 's6' || id === 's7') updateDownloadScreens();
+    if (id === 's3') renderSampleGrid();
+    if (id === 's5' && !typingEdited) syncTypeInputFromPrompt();
+  }
+  let typingEdited = false;
+  function syncTypeInputFromPrompt(){
+    const promptBox = document.getElementById('promptBox');
+    const typeEl = document.getElementById('typeInput');
+    if (promptBox && typeEl) typeEl.value = promptBox.value.trim() || '안녕하세요! 반갑습니다.';
+  }
+
+  // 실제 진행 시간(약 3.4초)을 재는 타이머 — 끝나면 03 선택 화면으로 자동 이동.
+  // 03에 걸린 4장의 이미지는 사용자님 실제 API 키로 Stability AI를 호출해 방금 전 생성한 진짜 결과물입니다.
+  function runRealLoading(){
+    clearInterval(loadingTimer);
+    const fill = document.getElementById('loadingFill');
+    const pct = document.getElementById('loadingPct');
+    const text = document.getElementById('loadingText');
+    const promptVal = (document.getElementById('promptBox').value || '').trim() || '안녕하세요! 반갑습니다.';
+    text.textContent = `AI가 "${promptVal}"과 비슷한 폰트를 찾는 중…`;
+    let p = 0;
+    fill.style.width = '0%';
+    pct.textContent = '0%';
+    loadingTimer = setInterval(() => {
+      p += Math.random() * 9 + 4;
+      if (p >= 100) {
+        p = 100;
+        fill.style.width = '100%';
+        pct.textContent = '완료';
+        clearInterval(loadingTimer);
+        setTimeout(() => goTo('s3'), 400);
+        return;
+      }
+      fill.style.width = p + '%';
+      pct.textContent = Math.floor(p) + '%';
+    }, 260);
+  }
+  document.querySelectorAll('#rail button').forEach(b=>{
+    b.addEventListener('click', ()=>goTo(b.dataset.target));
+  });
+
+  document.querySelectorAll('.tag:not(.lang-tag)').forEach(t=>{
+    t.addEventListener('click', ()=>{
+      const already = t.classList.contains('on');
+      document.querySelectorAll('.tag:not(.lang-tag)').forEach(x=>x.classList.remove('on'));
+      if (!already) t.classList.add('on');
+    });
+  });
+
+  // 샘플 카드(1~4)와 실제 CSS 폰트를 연결하는 표 — 언어별로 후보 폰트가 다름
+  const STYLE_SETS = {
+    ko: {
+      1: { label: '둥근명조',       family: "'Gowun Batang', serif",        gfontName: 'Gowun Batang',   noonnu: '고운바탕',     sample: '가나다' },
+      2: { label: '볼드고딕',       family: "'Black Han Sans', sans-serif", gfontName: 'Black Han Sans', noonnu: '배민 한나체',  sample: '가나다' },
+      3: { label: '팝고딕',         family: "'Do Hyeon', sans-serif",       gfontName: 'Do Hyeon',       noonnu: '배민 도현체',  sample: '가나다' },
+      4: { label: '헤비산세리프',   family: "'Nanum Gothic', sans-serif",   gfontName: 'Nanum Gothic',   noonnu: '나눔고딕',     sample: '가나다', weight: 800 },
+      5: { label: '귀여운손글씨',   family: "'Gaegu', cursive",             gfontName: 'Gaegu',          noonnu: '개구체',       sample: '가나다', weight: 700 },
+      6: { label: '고전붓글씨',     family: "'Song Myung', serif",          gfontName: 'Song Myung',     noonnu: '송명체',       sample: '가나다' },
+      7: { label: '세련된고딕',     family: "'Stylish', sans-serif",        gfontName: 'Stylish',        noonnu: '스타일리시',   sample: '가나다' },
+      8: { label: '귀여운굵은체',   family: "'Jua', sans-serif",            gfontName: 'Jua',            noonnu: '주아체',       sample: '가나다' },
+      9: { label: '클래식명조',     family: "'Noto Serif KR', serif",       gfontName: 'Noto Serif KR',  noonnu: null, sample: '가나다', weight: 700 },
+      10:{ label: '고급명조',       family: "'Nanum Myeongjo', serif",      gfontName: 'Nanum Myeongjo', noonnu: '나눔명조',     sample: '가나다', weight: 800 },
+      11:{ label: '일기장손글씨',   family: "'Nanum Pen Script', cursive",  gfontName: 'Nanum Pen Script', noonnu: '나눔손글씨 펜', sample: '가나다' },
+      12:{ label: '붓흘림체',       family: "'Nanum Brush Script', cursive", gfontName: 'Nanum Brush Script', noonnu: '나눔손글씨 붓', sample: '가나다' },
+      13:{ label: '부드러운고딕',   family: "'Gowun Dodum', sans-serif",    gfontName: 'Gowun Dodum',    noonnu: '고운돋움',     sample: '가나다' },
+      14:{ label: '거친손글씨',     family: "'East Sea Dokdo', cursive",    gfontName: 'East Sea Dokdo',  noonnu: '동해 독도체',  sample: '가나다' },
+      15:{ label: '동글손글씨',     family: "'Hi Melody', cursive",         gfontName: 'Hi Melody',      noonnu: '하이멜로디',   sample: '가나다' },
+      16:{ label: '섬세한손글씨',   family: "'Yeon Sung', cursive",         gfontName: 'Yeon Sung',      noonnu: '연성체',       sample: '가나다' },
+      17:{ label: '통통한손글씨',   family: "'Gamja Flower', cursive",      gfontName: 'Gamja Flower',   noonnu: '감자꽃체',     sample: '가나다' },
+      18:{ label: '개성팝체',       family: "'Kirang Haerang', cursive",    gfontName: 'Kirang Haerang', noonnu: '키랑해랑',     sample: '가나다' },
+      19:{ label: '그래피티',       family: "'Gugi', cursive",              gfontName: 'Gugi',           noonnu: '구기체',       sample: '가나다' },
+      20:{ label: '모던고딕',       family: "'Sunflower', sans-serif",      gfontName: 'Sunflower',      noonnu: '선플라워',     sample: '가나다', weight: 700 },
+      21:{ label: '섬세한필기체',   family: "'Single Day', cursive",        gfontName: 'Single Day',     noonnu: '싱글데이',     sample: '가나다' },
+    },
+    en: {
+      1: { label: '엘레강트 세리프',   family: "'Playfair Display', serif", gfontName: 'Playfair Display', noonnu: null, sample: 'Aa Bb' },
+      2: { label: '볼드 디스플레이',   family: "'Anton', sans-serif",       gfontName: 'Anton',            noonnu: null, sample: 'Aa Bb' },
+      3: { label: '손글씨 스크립트',   family: "'Pacifico', cursive",       gfontName: 'Pacifico',         noonnu: null, sample: 'Aa Bb' },
+      4: { label: '클린 산세리프',     family: "'Inter', sans-serif",       gfontName: 'Inter',            noonnu: null, sample: 'Aa Bb' },
+      5: { label: '콘덴스드 임팩트',   family: "'Bebas Neue', sans-serif",  gfontName: 'Bebas Neue',       noonnu: null, sample: 'Aa Bb' },
+      6: { label: '우아한 캘리그라피', family: "'Dancing Script', cursive", gfontName: 'Dancing Script',   noonnu: null, sample: 'Aa Bb', weight: 700 },
+      7: { label: '모노스페이스',      family: "'Space Mono', monospace",   gfontName: 'Space Mono',       noonnu: null, sample: 'Aa Bb' },
+      8: { label: '클래식 세리프',     family: "'Merriweather', serif",     gfontName: 'Merriweather',     noonnu: null, sample: 'Aa Bb', weight: 900 },
+      9: { label: '픽셀 레트로게임',   family: "'Press Start 2P', monospace", gfontName: 'Press Start 2P', noonnu: null, sample: 'Aa Bb' },
+      10:{ label: '호러 그런지',       family: "'Creepster', cursive",      gfontName: 'Creepster',        noonnu: null, sample: 'Aa Bb' },
+      11:{ label: '고딕 블랙레터',     family: "'UnifrakturMaguntia', cursive", gfontName: 'UnifrakturMaguntia', noonnu: null, sample: 'Aa Bb' },
+      12:{ label: '마커 그래피티',     family: "'Permanent Marker', cursive", gfontName: 'Permanent Marker', noonnu: null, sample: 'Aa Bb' },
+      13:{ label: '레트로 팝',         family: "'Righteous', sans-serif",   gfontName: 'Righteous',        noonnu: null, sample: 'Aa Bb' },
+      14:{ label: '미래지향 SF',       family: "'Orbitron', sans-serif",    gfontName: 'Orbitron',         noonnu: null, sample: 'Aa Bb', weight: 700 },
+      15:{ label: '빈티지 타자기',     family: "'Special Elite', cursive",  gfontName: 'Special Elite',    noonnu: null, sample: 'Aa Bb' },
+      16:{ label: '캐주얼 손글씨',     family: "'Caveat', cursive",         gfontName: 'Caveat',           noonnu: null, sample: 'Aa Bb', weight: 700 },
+      17:{ label: '페인트 브러시',     family: "'Rubik Wet Paint', cursive", gfontName: 'Rubik Wet Paint', noonnu: null, sample: 'Aa Bb' },
+      18:{ label: '호러 드립',         family: "'Nosifer', cursive",        gfontName: 'Nosifer',          noonnu: null, sample: 'Aa Bb' },
+      19:{ label: '네온 모노톤',       family: "'Monoton', cursive",        gfontName: 'Monoton',          noonnu: null, sample: 'Aa Bb' },
+    },
+  };
+  let currentLang = 'ko';
+  let selectedSample = 1;
+
+  function renderSampleGrid(){
+    const set = STYLE_SETS[currentLang];
+    const grid = document.getElementById('sampleGrid');
+    grid.innerHTML = '';
+
+    // 스타일 설명에 입력한 글씨를 그대로 미리보기 텍스트로 사용 (없으면 기본 샘플)
+    const promptBox = document.getElementById('promptBox');
+    const promptVal = promptBox ? promptBox.value.trim() : '';
+    const escapeHtml = (str) => str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    Object.keys(set).forEach(key => {
+      const i = +key;
+      const s = set[i];
+      const displayText = promptVal ? escapeHtml(promptVal) : s.sample;
+      const sub = s.noonnu ? `(눈누 ${s.noonnu})` : `(${s.gfontName})`;
+      const card = document.createElement('div');
+      card.className = 'sample-card' + (i === selectedSample ? ' selected' : '');
+      card.dataset.sample = i;
+      card.innerHTML = `
+        <div class="glyphs" style="font-family:${s.family}; font-weight:${s.weight || ''}">${displayText}</div>
+        <div class="label">초안 ${String(i).padStart(2,'0')} · ${s.label}<br><span style="font-weight:400; opacity:.65; font-size:.62rem;">${sub}</span></div>
+        <div class="check">✓ 선택됨</div>
+      `;
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.sample-card').forEach(x => x.classList.remove('selected'));
+        card.classList.add('selected');
+        selectedSample = i;
+        applyStyleEverywhere();
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  const PREVIEW_TEXT = {
+    ko: { preview: '안녕하세요<br>반갑습니다', typing: '안녕하세요! 반갑습니다.' },
+    en: { preview: 'Hello there<br>Nice to meet you', typing: 'The quick brown fox' },
+  };
+
+  document.querySelectorAll('#langToggle .tag').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      document.querySelectorAll('#langToggle .tag').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      currentLang = b.dataset.lang;
+
+      // 01 스타일 설명도 선택한 언어에 맞게 교체 — 이 텍스트가 03 미리보기 글씨로 그대로 쓰이기 때문
+      const promptBox = document.getElementById('promptBox');
+      if (promptBox) {
+        const PROMPT_DEFAULT = { ko: '안녕하세요! 반갑습니다.', en: 'Hello! Nice to meet you.' };
+        promptBox.value = PROMPT_DEFAULT[currentLang];
+        promptBox.placeholder = currentLang === 'ko' ? '예: 안녕하세요! 반갑습니다.' : 'e.g. Hello! Nice to meet you.';
+      }
+
+      renderSampleGrid();
+      applyStyleEverywhere();
+
+      // 02 로딩 화면 아이콘도 선택한 언어에 맞게 교체 (한/EN)
+      const brushIcon = document.getElementById('brushIcon');
+      if (brushIcon) brushIcon.textContent = currentLang === 'ko' ? '한' : 'EN';
+
+      // 05 타이핑 화면도 04 미리보기와 마찬가지로 promptBox 값을 그대로 따라감 (사용자가 05에서 직접 수정하지 않은 경우에만)
+      typingEdited = false;
+      syncTypeInputFromPrompt();
+    });
+  });
+  renderSampleGrid();
+
+  function updateDownloadScreens(){
+    const style = STYLE_SETS[currentLang][selectedSample];
+    const weight = style.weight || 400;
+    const displayName = style.noonnu ? `${style.noonnu} (Google Fonts: ${style.gfontName})` : style.gfontName;
+
+    const summary = document.getElementById('buildSummary');
+    if (summary) summary.textContent = `선택한 폰트: ${displayName}`;
+
+    const chip = document.getElementById('downloadChip');
+    if (chip) chip.innerHTML = `${style.noonnu || style.gfontName} <span class="ext">${style.gfontName}</span>`;
+
+    const apiBase = `/api/build-font?family=${encodeURIComponent(style.gfontName)}&weight=${weight}`;
+    const ttfLink = document.getElementById('downloadLinkTtf');
+    const woff2Link = document.getElementById('downloadLinkWoff2');
+    if (ttfLink) ttfLink.href = apiBase + '&format=ttf';
+    if (woff2Link) woff2Link.href = apiBase + '&format=woff2';
+  }
+
+  // (카드 클릭 핸들러는 renderSampleGrid()에서 매번 새로 생성되므로 여기서는 필요 없음)
+
+  const weightRange = document.getElementById('weightRange');
+  const sizeRange = document.getElementById('sizeRange');
+  const skewRange = document.getElementById('skewRange');
+  const preview = document.getElementById('livePreview');
+  const typeInput = document.getElementById('typeInput');
+  typeInput.addEventListener('input', () => { typingEdited = true; });
+  const styleChip = document.getElementById('styleChip');
+
+  let currentColor = '#111111';
+
+  function applyStyleEverywhere(){
+    const weight = weightRange.value;
+    const size = sizeRange.value;
+    const skew = skewRange.value;
+    const style = STYLE_SETS[currentLang][selectedSample];
+
+    // 04 미리보기 글씨를 01 "폰트 미리보기 글씨" 입력값과 항상 동일하게 유지
+    const promptBox = document.getElementById('promptBox');
+    const promptVal = promptBox ? promptBox.value.trim() : '';
+    preview.textContent = promptVal || '안녕하세요! 반갑습니다.';
+
+    preview.style.fontFamily = style.family;
+    preview.style.fontWeight = weight;
+    preview.style.fontSize = size + 'rem';
+    preview.style.transform = `skewX(${-skew}deg)`;
+    preview.style.color = currentColor;
+
+    document.getElementById('weightVal').textContent = weight;
+    document.getElementById('sizeVal').textContent = size + 'rem';
+    document.getElementById('skewVal').textContent = skew + '°';
+
+    // 03 선택 + 04 커스텀에서 정한 스타일을 05 타이핑 화면에도 그대로 반영
+    typeInput.style.fontFamily = style.family;
+    typeInput.style.fontWeight = weight;
+    typeInput.style.color = currentColor;
+    typeInput.style.transform = `skewX(${-skew}deg)`;
+
+    styleChip.textContent = `초안${String(selectedSample).padStart(2,'0')} · ${style.label} · 굵기${weight} · ${currentColor}`;
+  }
+  [weightRange, sizeRange, skewRange].forEach(r=>r.addEventListener('input', applyStyleEverywhere));
+
+  document.querySelectorAll('.swatch').forEach(s=>{
+    s.addEventListener('click', ()=>{
+      document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active'));
+      s.classList.add('active');
+      currentColor = s.dataset.color;
+      applyStyleEverywhere();
+    });
+  });
+
+  applyStyleEverywhere();
+
+  const promptBoxEl = document.getElementById('promptBox');
+  if (promptBoxEl) promptBoxEl.addEventListener('input', applyStyleEverywhere);
+</script>
