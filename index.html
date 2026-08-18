@@ -210,7 +210,7 @@
 
   .effect-1{ background:#e8467a; }
   .effect-1 .effect-text{
-    font-family:'Baloo 2', sans-serif; color:#fff;
+    color:#fff;
     -webkit-text-stroke:6px #7a2255;
     paint-order:stroke fill;
     text-shadow:4px 4px 0 #ffb347, 8px 8px 0 rgba(0,0,0,.25);
@@ -218,7 +218,6 @@
 
   .effect-2{ background:linear-gradient(160deg,#7a2ba8,#c23aa0); }
   .effect-2 .effect-text{
-    font-family:'Fredoka', sans-serif;
     background:linear-gradient(180deg,#bfe3ff,#4a8fd6);
     -webkit-background-clip:text; background-clip:text; color:transparent;
     -webkit-text-stroke:3px #ffb347;
@@ -227,7 +226,7 @@
 
   .effect-3{ background:radial-gradient(circle,#e0448f,#a02060); }
   .effect-3 .effect-text{
-    font-family:'Baloo 2', sans-serif; color:#fff;
+    color:#fff;
     -webkit-text-stroke:6px #ffb347;
     paint-order:stroke fill;
     text-shadow:0 6px 0 rgba(0,0,0,.3);
@@ -235,7 +234,7 @@
 
   .effect-4{ background:linear-gradient(160deg,#ffb84d,#ff8a3d); }
   .effect-4 .effect-text{
-    font-family:'Fredoka', sans-serif; color:#2b6cb0;
+    color:#2b6cb0;
     -webkit-text-stroke:5px #fff;
     paint-order:stroke fill;
     text-shadow:0 6px 0 #8a5a2b;
@@ -713,9 +712,12 @@
     });
 
     // 텍스트 이펙트는 영문 전용 장식 폰트라, 한글이 섞여 있으면 기본 단어로 대체
-    const isAsciiOnly = /^[\x00-\x7F]*$/.test(promptVal);
-    const effectText = (promptVal && isAsciiOnly) ? escapeHtml(promptVal) : 'Candy';
-    document.querySelectorAll('#effectGrid .effect-text').forEach(el => { el.textContent = effectText; });
+    const effectText = promptVal || (currentLang === 'ko' ? '캔디' : 'Candy');
+    const effectFamily = currentLang === 'ko' ? "'Jua', sans-serif" : "'Baloo 2', sans-serif";
+    document.querySelectorAll('#effectGrid .effect-text').forEach(el => {
+      el.textContent = effectText;
+      el.style.fontFamily = effectFamily;
+    });
   }
 
   const PREVIEW_TEXT = {
