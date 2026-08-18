@@ -174,7 +174,7 @@
   }
   .sample-card:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--shadow-c); }
   .sample-card.selected{ background:var(--yellow); box-shadow:2px 2px 0 var(--shadow-c); transform:translate(3px,3px); }
-  .sample-card .glyphs{ font-size:2.2rem; margin-bottom:.7rem; }
+  .sample-card .glyphs{ font-size:2.2rem; margin-bottom:.7rem; font-synthesis:none; }
   .sample-card .ai-thumb{ width:100%; aspect-ratio:1; object-fit:cover; border:2px solid var(--line); margin-bottom:.7rem; }
   .g1{ font-family:'Gowun Batang', serif; font-weight:700; }
   .g2{ font-family:'Black Han Sans', sans-serif; }
@@ -202,6 +202,7 @@
     font-family:'Noto Sans KR', sans-serif; text-align:center; line-height:1.5;
     transition:font-weight .1s, font-size .1s, color .1s;
     transform-style:preserve-3d;
+    font-synthesis:none; -webkit-font-smoothing:antialiased;
   }
   .controls{ display:flex; flex-direction:column; gap:.55rem; padding:1.1rem 1.6rem; }
   .control-row label{
@@ -234,6 +235,7 @@
   #typeInput{
     width:100%; border:none; background:transparent; outline:none; resize:none;
     min-height:8rem; font-size:1.7rem; line-height:1.7; color:var(--ink);
+    font-synthesis:none; -webkit-font-smoothing:antialiased;
   }
   .type-pane-footer{
     display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.75rem;
