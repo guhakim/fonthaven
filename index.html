@@ -386,9 +386,25 @@
           <input type="range" id="skewRange" min="-10" max="10" step="1" value="0">
         </div>
         <div class="control-row">
-          <label>3D 회전 <span id="rotateVal">0°</span></label>
+          <label>3D 회전 (Y축) <span id="rotateVal">0°</span></label>
           <input type="range" id="rotateRange" min="-60" max="60" step="1" value="0">
           <div style="font-family:'IBM Plex Mono', monospace; font-size:.65rem; opacity:.6; margin-top:.3rem;">미리보기 글자를 직접 드래그해서 돌려도 됩니다</div>
+        </div>
+        <div class="control-row">
+          <button class="btn" id="isoToggleBtn" type="button" style="padding:.5rem 1rem; font-size:.72rem;">+ 아이소메트릭 모드</button>
+        </div>
+        <div id="isoControls" style="display:none;">
+          <div class="control-row">
+            <label>X축 회전 <span id="rotateXVal">0°</span></label>
+            <input type="range" id="rotateXRange" min="-90" max="90" step="1" value="0">
+          </div>
+          <div class="control-row">
+            <label>Z축 회전 <span id="rotateZVal">0°</span></label>
+            <input type="range" id="rotateZRange" min="-90" max="90" step="1" value="0">
+          </div>
+          <div class="control-row">
+            <button class="btn btn-secondary" id="isoPresetBtn" type="button" style="padding:.5rem 1rem; font-size:.72rem;">아이소메트릭 각도로 맞추기</button>
+          </div>
         </div>
         <div class="control-row">
           <label>색상</label>
@@ -712,6 +728,8 @@
   const sizeRange = document.getElementById('sizeRange');
   const skewRange = document.getElementById('skewRange');
   const rotateRange = document.getElementById('rotateRange');
+  const rotateXRange = document.getElementById('rotateXRange');
+  const rotateZRange = document.getElementById('rotateZRange');
   const preview = document.getElementById('livePreview');
   const typeInput = document.getElementById('typeInput');
   typeInput.addEventListener('input', () => { typingEdited = true; });
@@ -724,6 +742,8 @@
     const size = sizeRange.value;
     const skew = skewRange.value;
     const rotate = rotateRange.value;
+    const rotateX = rotateXRange.value;
+    const rotateZ = rotateZRange.value;
     const style = STYLE_SETS[currentLang][selectedSample];
 
     // 04 미리보기 글씨를 01 "폰트 미리보기 글씨" 입력값과 항상 동일하게 유지
@@ -734,11 +754,13 @@
     preview.style.fontFamily = style.family;
     preview.style.fontWeight = weight;
     preview.style.fontSize = size + 'rem';
-    preview.style.transform = `skewX(${-skew}deg) rotateY(${rotate}deg)`;
+    preview.style.transform = `skewX(${-skew}deg) rotateY(${rotate}deg) rotateX(${rotateX}deg) rotateZ(${rotateZ}deg)`;
     preview.style.color = currentColor;
 
     document.getElementById('weightVal').textContent = weight;
     document.getElementById('sizeVal').textContent = size + 'rem';
+    document.getElementById('rotateXVal').textContent = rotateX + '°';
+    document.getElementById('rotateZVal').textContent = rotateZ + '°';
     document.getElementById('skewVal').textContent = skew + '°';
     document.getElementById('rotateVal').textContent = rotate + '°';
 
@@ -750,7 +772,24 @@
 
     styleChip.textContent = `초안${String(selectedSample).padStart(2,'0')} · ${style.label} · 굵기${weight} · ${currentColor}`;
   }
-  [weightRange, sizeRange, skewRange, rotateRange].forEach(r=>r.addEventListener('input', applyStyleEverywhere));
+  [weightRange, sizeRange, skewRange, rotateRange, rotateXRange, rotateZRange].forEach(r=>r.addEventListener('input', applyStyleEverywhere));
+
+  // 아이소메트릭 모드: X/Z축 컨트롤을 펼치고, 클릭 한 번으로 표준 아이소메트릭 각도(X:60° Z:45°)로 맞춤
+  const isoToggleBtn = document.getElementById('isoToggleBtn');
+  const isoControls = document.getElementById('isoControls');
+  const isoPresetBtn = document.getElementById('isoPresetBtn');
+  let isoOpen = false;
+  isoToggleBtn.addEventListener('click', () => {
+    isoOpen = !isoOpen;
+    isoControls.style.display = isoOpen ? 'block' : 'none';
+    isoToggleBtn.textContent = isoOpen ? '− 아이소메트릭 모드 닫기' : '+ 아이소메트릭 모드';
+  });
+  isoPresetBtn.addEventListener('click', () => {
+    rotateXRange.value = 60;
+    rotateZRange.value = 45;
+    rotateRange.value = 0;
+    applyStyleEverywhere();
+  });
 
   // 미리보기 글자를 마우스로 직접 드래그해서 3D 회전
   const previewPane = document.getElementById('previewPane');
