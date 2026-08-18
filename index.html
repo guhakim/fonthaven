@@ -559,58 +559,58 @@
   // 샘플 카드(1~4)와 실제 CSS 폰트를 연결하는 표 — 언어별로 후보 폰트가 다름
   const STYLE_SETS = {
     ko: {
-      1: { label: '둥근명조',       family: "'Gowun Batang', serif",        gfontName: 'Gowun Batang',   noonnu: '고운바탕',     sample: '가나다' },
-      2: { label: '볼드고딕',       family: "'Black Han Sans', sans-serif", gfontName: 'Black Han Sans', noonnu: '배민 한나체',  sample: '가나다' },
-      3: { label: '팝고딕',         family: "'Do Hyeon', sans-serif",       gfontName: 'Do Hyeon',       noonnu: '배민 도현체',  sample: '가나다' },
-      4: { label: '헤비산세리프',   family: "'Nanum Gothic', sans-serif",   gfontName: 'Nanum Gothic',   noonnu: '나눔고딕',     sample: '가나다', weight: 800 },
-      5: { label: '귀여운손글씨',   family: "'Gaegu', cursive",             gfontName: 'Gaegu',          noonnu: '개구체',       sample: '가나다', weight: 700 },
-      6: { label: '고전붓글씨',     family: "'Song Myung', serif",          gfontName: 'Song Myung',     noonnu: '송명체',       sample: '가나다' },
-      7: { label: '세련된고딕',     family: "'Stylish', sans-serif",        gfontName: 'Stylish',        noonnu: '스타일리시',   sample: '가나다' },
-      8: { label: '귀여운굵은체',   family: "'Jua', sans-serif",            gfontName: 'Jua',            noonnu: '주아체',       sample: '가나다' },
-      9: { label: '클래식명조',     family: "'Noto Serif KR', serif",       gfontName: 'Noto Serif KR',  noonnu: null, sample: '가나다', weight: 700 },
-      10:{ label: '고급명조',       family: "'Nanum Myeongjo', serif",      gfontName: 'Nanum Myeongjo', noonnu: '나눔명조',     sample: '가나다', weight: 800 },
-      11:{ label: '일기장손글씨',   family: "'Nanum Pen Script', cursive",  gfontName: 'Nanum Pen Script', noonnu: '나눔손글씨 펜', sample: '가나다' },
-      12:{ label: '붓흘림체',       family: "'Nanum Brush Script', cursive", gfontName: 'Nanum Brush Script', noonnu: '나눔손글씨 붓', sample: '가나다' },
-      13:{ label: '부드러운고딕',   family: "'Gowun Dodum', sans-serif",    gfontName: 'Gowun Dodum',    noonnu: '고운돋움',     sample: '가나다' },
-      14:{ label: '거친손글씨',     family: "'East Sea Dokdo', cursive",    gfontName: 'East Sea Dokdo',  noonnu: '동해 독도체',  sample: '가나다' },
-      15:{ label: '동글손글씨',     family: "'Hi Melody', cursive",         gfontName: 'Hi Melody',      noonnu: '하이멜로디',   sample: '가나다' },
-      16:{ label: '섬세한손글씨',   family: "'Yeon Sung', cursive",         gfontName: 'Yeon Sung',      noonnu: '연성체',       sample: '가나다' },
-      17:{ label: '통통한손글씨',   family: "'Gamja Flower', cursive",      gfontName: 'Gamja Flower',   noonnu: '감자꽃체',     sample: '가나다' },
-      18:{ label: '개성팝체',       family: "'Kirang Haerang', cursive",    gfontName: 'Kirang Haerang', noonnu: '키랑해랑',     sample: '가나다' },
-      19:{ label: '그래피티',       family: "'Gugi', cursive",              gfontName: 'Gugi',           noonnu: '구기체',       sample: '가나다' },
-      20:{ label: '모던고딕',       family: "'Sunflower', sans-serif",      gfontName: 'Sunflower',      noonnu: '선플라워',     sample: '가나다', weight: 700 },
-      21:{ label: '섬세한필기체',   family: "'Single Day', cursive",        gfontName: 'Single Day',     noonnu: '싱글데이',     sample: '가나다' },
+      1: { label: '둥근명조',       family: "'Gowun Batang', serif",        gfontName: 'Gowun Batang',   sample: '가나다' },
+      2: { label: '볼드고딕',       family: "'Black Han Sans', sans-serif", gfontName: 'Black Han Sans', sample: '가나다' },
+      3: { label: '팝고딕',         family: "'Do Hyeon', sans-serif",       gfontName: 'Do Hyeon',       sample: '가나다' },
+      4: { label: '헤비산세리프',   family: "'Nanum Gothic', sans-serif",   gfontName: 'Nanum Gothic',   sample: '가나다', weight: 800 },
+      5: { label: '귀여운손글씨',   family: "'Gaegu', cursive",             gfontName: 'Gaegu',          sample: '가나다', weight: 700 },
+      6: { label: '고전붓글씨',     family: "'Song Myung', serif",          gfontName: 'Song Myung',     sample: '가나다' },
+      7: { label: '세련된고딕',     family: "'Stylish', sans-serif",        gfontName: 'Stylish',        sample: '가나다' },
+      8: { label: '귀여운굵은체',   family: "'Jua', sans-serif",            gfontName: 'Jua',            sample: '가나다' },
+      9: { label: '클래식명조',     family: "'Noto Serif KR', serif",       gfontName: 'Noto Serif KR',  sample: '가나다', weight: 700 },
+      10:{ label: '고급명조',       family: "'Nanum Myeongjo', serif",      gfontName: 'Nanum Myeongjo', sample: '가나다', weight: 800 },
+      11:{ label: '일기장손글씨',   family: "'Nanum Pen Script', cursive",  gfontName: 'Nanum Pen Script', sample: '가나다' },
+      12:{ label: '붓흘림체',       family: "'Nanum Brush Script', cursive", gfontName: 'Nanum Brush Script', sample: '가나다' },
+      13:{ label: '부드러운고딕',   family: "'Gowun Dodum', sans-serif",    gfontName: 'Gowun Dodum',    sample: '가나다' },
+      14:{ label: '거친손글씨',     family: "'East Sea Dokdo', cursive",    gfontName: 'East Sea Dokdo',  sample: '가나다' },
+      15:{ label: '동글손글씨',     family: "'Hi Melody', cursive",         gfontName: 'Hi Melody',      sample: '가나다' },
+      16:{ label: '섬세한손글씨',   family: "'Yeon Sung', cursive",         gfontName: 'Yeon Sung',      sample: '가나다' },
+      17:{ label: '통통한손글씨',   family: "'Gamja Flower', cursive",      gfontName: 'Gamja Flower',   sample: '가나다' },
+      18:{ label: '개성팝체',       family: "'Kirang Haerang', cursive",    gfontName: 'Kirang Haerang', sample: '가나다' },
+      19:{ label: '그래피티',       family: "'Gugi', cursive",              gfontName: 'Gugi',           sample: '가나다' },
+      20:{ label: '모던고딕',       family: "'Sunflower', sans-serif",      gfontName: 'Sunflower',      sample: '가나다', weight: 700 },
+      21:{ label: '섬세한필기체',   family: "'Single Day', cursive",        gfontName: 'Single Day',     sample: '가나다' },
     },
     en: {
-      1: { label: '엘레강트 세리프',   family: "'Playfair Display', serif", gfontName: 'Playfair Display', noonnu: null, sample: 'Aa Bb' },
-      2: { label: '볼드 디스플레이',   family: "'Anton', sans-serif",       gfontName: 'Anton',            noonnu: null, sample: 'Aa Bb' },
-      3: { label: '손글씨 스크립트',   family: "'Pacifico', cursive",       gfontName: 'Pacifico',         noonnu: null, sample: 'Aa Bb' },
-      4: { label: '클린 산세리프',     family: "'Inter', sans-serif",       gfontName: 'Inter',            noonnu: null, sample: 'Aa Bb' },
-      5: { label: '콘덴스드 임팩트',   family: "'Bebas Neue', sans-serif",  gfontName: 'Bebas Neue',       noonnu: null, sample: 'Aa Bb' },
-      6: { label: '우아한 캘리그라피', family: "'Dancing Script', cursive", gfontName: 'Dancing Script',   noonnu: null, sample: 'Aa Bb', weight: 700 },
-      7: { label: '모노스페이스',      family: "'Space Mono', monospace",   gfontName: 'Space Mono',       noonnu: null, sample: 'Aa Bb' },
-      8: { label: '클래식 세리프',     family: "'Merriweather', serif",     gfontName: 'Merriweather',     noonnu: null, sample: 'Aa Bb', weight: 900 },
-      9: { label: '픽셀 레트로게임',   family: "'Press Start 2P', monospace", gfontName: 'Press Start 2P', noonnu: null, sample: 'Aa Bb' },
-      10:{ label: '호러 그런지',       family: "'Creepster', cursive",      gfontName: 'Creepster',        noonnu: null, sample: 'Aa Bb' },
-      11:{ label: '고딕 블랙레터',     family: "'UnifrakturMaguntia', cursive", gfontName: 'UnifrakturMaguntia', noonnu: null, sample: 'Aa Bb' },
-      12:{ label: '마커 그래피티',     family: "'Permanent Marker', cursive", gfontName: 'Permanent Marker', noonnu: null, sample: 'Aa Bb' },
-      13:{ label: '레트로 팝',         family: "'Righteous', sans-serif",   gfontName: 'Righteous',        noonnu: null, sample: 'Aa Bb' },
-      14:{ label: '미래지향 SF',       family: "'Orbitron', sans-serif",    gfontName: 'Orbitron',         noonnu: null, sample: 'Aa Bb', weight: 700 },
-      15:{ label: '빈티지 타자기',     family: "'Special Elite', cursive",  gfontName: 'Special Elite',    noonnu: null, sample: 'Aa Bb' },
-      16:{ label: '캐주얼 손글씨',     family: "'Caveat', cursive",         gfontName: 'Caveat',           noonnu: null, sample: 'Aa Bb', weight: 700 },
-      17:{ label: '페인트 브러시',     family: "'Rubik Wet Paint', cursive", gfontName: 'Rubik Wet Paint', noonnu: null, sample: 'Aa Bb' },
-      18:{ label: '호러 드립',         family: "'Nosifer', cursive",        gfontName: 'Nosifer',          noonnu: null, sample: 'Aa Bb' },
-      19:{ label: '네온 모노톤',       family: "'Monoton', cursive",        gfontName: 'Monoton',          noonnu: null, sample: 'Aa Bb' },
-      20:{ label: '로맨틱 스크립트',   family: "'Lobster', cursive",        gfontName: 'Lobster',          noonnu: null, sample: 'Aa Bb' },
-      21:{ label: '패션 매거진',       family: "'Abril Fatface', serif",    gfontName: 'Abril Fatface',    noonnu: null, sample: 'Aa Bb' },
-      22:{ label: '심플 헤드라인',     family: "'Fjalla One', sans-serif",  gfontName: 'Fjalla One',       noonnu: null, sample: 'Aa Bb' },
-      23:{ label: '우아한 산세리프',   family: "'Josefin Sans', sans-serif", gfontName: 'Josefin Sans',    noonnu: null, sample: 'Aa Bb', weight: 600 },
-      24:{ label: '리포트 세리프',     family: "'Roboto Slab', serif",      gfontName: 'Roboto Slab',      noonnu: null, sample: 'Aa Bb', weight: 700 },
-      25:{ label: '로고 블랙',         family: "'Archivo Black', sans-serif", gfontName: 'Archivo Black',  noonnu: null, sample: 'Aa Bb' },
-      26:{ label: '손글씨 마커',       family: "'Amatic SC', sans-serif",   gfontName: 'Amatic SC',        noonnu: null, sample: 'Aa Bb', weight: 700 },
-      27:{ label: '트로피컬 팝',       family: "'Shrikhand', cursive",      gfontName: 'Shrikhand',        noonnu: null, sample: 'Aa Bb' },
-      28:{ label: '레트로 터미널',     family: "'VT323', monospace",        gfontName: 'VT323',            noonnu: null, sample: 'Aa Bb' },
-      29:{ label: '라운드 산세리프',   family: "'Comfortaa', sans-serif",   gfontName: 'Comfortaa',        noonnu: null, sample: 'Aa Bb', weight: 700 },
+      1: { label: '엘레강트 세리프',   family: "'Playfair Display', serif", gfontName: 'Playfair Display', sample: 'Aa Bb' },
+      2: { label: '볼드 디스플레이',   family: "'Anton', sans-serif",       gfontName: 'Anton',            sample: 'Aa Bb' },
+      3: { label: '손글씨 스크립트',   family: "'Pacifico', cursive",       gfontName: 'Pacifico',         sample: 'Aa Bb' },
+      4: { label: '클린 산세리프',     family: "'Inter', sans-serif",       gfontName: 'Inter',            sample: 'Aa Bb' },
+      5: { label: '콘덴스드 임팩트',   family: "'Bebas Neue', sans-serif",  gfontName: 'Bebas Neue',       sample: 'Aa Bb' },
+      6: { label: '우아한 캘리그라피', family: "'Dancing Script', cursive", gfontName: 'Dancing Script',   sample: 'Aa Bb', weight: 700 },
+      7: { label: '모노스페이스',      family: "'Space Mono', monospace",   gfontName: 'Space Mono',       sample: 'Aa Bb' },
+      8: { label: '클래식 세리프',     family: "'Merriweather', serif",     gfontName: 'Merriweather',     sample: 'Aa Bb', weight: 900 },
+      9: { label: '픽셀 레트로게임',   family: "'Press Start 2P', monospace", gfontName: 'Press Start 2P', sample: 'Aa Bb' },
+      10:{ label: '호러 그런지',       family: "'Creepster', cursive",      gfontName: 'Creepster',        sample: 'Aa Bb' },
+      11:{ label: '고딕 블랙레터',     family: "'UnifrakturMaguntia', cursive", gfontName: 'UnifrakturMaguntia', sample: 'Aa Bb' },
+      12:{ label: '마커 그래피티',     family: "'Permanent Marker', cursive", gfontName: 'Permanent Marker', sample: 'Aa Bb' },
+      13:{ label: '레트로 팝',         family: "'Righteous', sans-serif",   gfontName: 'Righteous',        sample: 'Aa Bb' },
+      14:{ label: '미래지향 SF',       family: "'Orbitron', sans-serif",    gfontName: 'Orbitron',         sample: 'Aa Bb', weight: 700 },
+      15:{ label: '빈티지 타자기',     family: "'Special Elite', cursive",  gfontName: 'Special Elite',    sample: 'Aa Bb' },
+      16:{ label: '캐주얼 손글씨',     family: "'Caveat', cursive",         gfontName: 'Caveat',           sample: 'Aa Bb', weight: 700 },
+      17:{ label: '페인트 브러시',     family: "'Rubik Wet Paint', cursive", gfontName: 'Rubik Wet Paint', sample: 'Aa Bb' },
+      18:{ label: '호러 드립',         family: "'Nosifer', cursive",        gfontName: 'Nosifer',          sample: 'Aa Bb' },
+      19:{ label: '네온 모노톤',       family: "'Monoton', cursive",        gfontName: 'Monoton',          sample: 'Aa Bb' },
+      20:{ label: '로맨틱 스크립트',   family: "'Lobster', cursive",        gfontName: 'Lobster',          sample: 'Aa Bb' },
+      21:{ label: '패션 매거진',       family: "'Abril Fatface', serif",    gfontName: 'Abril Fatface',    sample: 'Aa Bb' },
+      22:{ label: '심플 헤드라인',     family: "'Fjalla One', sans-serif",  gfontName: 'Fjalla One',       sample: 'Aa Bb' },
+      23:{ label: '우아한 산세리프',   family: "'Josefin Sans', sans-serif", gfontName: 'Josefin Sans',    sample: 'Aa Bb', weight: 600 },
+      24:{ label: '리포트 세리프',     family: "'Roboto Slab', serif",      gfontName: 'Roboto Slab',      sample: 'Aa Bb', weight: 700 },
+      25:{ label: '로고 블랙',         family: "'Archivo Black', sans-serif", gfontName: 'Archivo Black',  sample: 'Aa Bb' },
+      26:{ label: '손글씨 마커',       family: "'Amatic SC', sans-serif",   gfontName: 'Amatic SC',        sample: 'Aa Bb', weight: 700 },
+      27:{ label: '트로피컬 팝',       family: "'Shrikhand', cursive",      gfontName: 'Shrikhand',        sample: 'Aa Bb' },
+      28:{ label: '레트로 터미널',     family: "'VT323', monospace",        gfontName: 'VT323',            sample: 'Aa Bb' },
+      29:{ label: '라운드 산세리프',   family: "'Comfortaa', sans-serif",   gfontName: 'Comfortaa',        sample: 'Aa Bb', weight: 700 },
     },
   };
   let currentLang = 'ko';
@@ -630,7 +630,7 @@
       const i = +key;
       const s = set[i];
       const displayText = promptVal ? escapeHtml(promptVal) : s.sample;
-      const sub = s.noonnu ? `(눈누 ${s.noonnu})` : `(${s.gfontName})`;
+      const sub = `(${s.gfontName})`;
       const card = document.createElement('div');
       card.className = 'sample-card' + (i === selectedSample ? ' selected' : '');
       card.dataset.sample = i;
@@ -685,13 +685,11 @@
   function updateDownloadScreens(){
     const style = STYLE_SETS[currentLang][selectedSample];
     const weight = style.weight || 400;
-    const displayName = style.noonnu ? `${style.noonnu} (Google Fonts: ${style.gfontName})` : style.gfontName;
-
     const summary = document.getElementById('buildSummary');
-    if (summary) summary.textContent = `선택한 폰트: ${displayName}`;
+    if (summary) summary.textContent = `선택한 폰트: ${style.gfontName}`;
 
     const chip = document.getElementById('downloadChip');
-    if (chip) chip.innerHTML = `${style.noonnu || style.gfontName} <span class="ext">${style.gfontName}</span>`;
+    if (chip) chip.innerHTML = `${style.gfontName} <span class="ext">${style.gfontName}</span>`;
 
     const apiBase = `/api/build-font?family=${encodeURIComponent(style.gfontName)}&weight=${weight}`;
     const ttfLink = document.getElementById('downloadLinkTtf');
