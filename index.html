@@ -194,14 +194,14 @@
   .customize-layout{ display:grid; grid-template-columns:1fr; gap:1.5rem; }
   .preview-pane{
     background:var(--panel); padding:2.2rem 1.6rem; display:flex; align-items:center;
-    justify-content:center; min-height:460px;
+    justify-content:center; min-height:460px; overflow:hidden;
     perspective:900px; cursor:grab;
   }
   .preview-pane:active{ cursor:grabbing; }
   #livePreview{
     font-family:'Noto Sans KR', sans-serif; text-align:center; line-height:1.5;
     transition:font-weight .1s, font-size .1s, color .1s;
-    transform-style:preserve-3d;
+    transform-style:preserve-3d; max-width:100%;
     font-synthesis:none; -webkit-font-smoothing:antialiased;
   }
   .controls{ display:flex; flex-direction:column; gap:.55rem; padding:1.1rem 1.6rem; }
