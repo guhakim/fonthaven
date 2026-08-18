@@ -403,6 +403,10 @@
             <input type="range" id="rotateZRange" min="-90" max="90" step="1" value="0">
           </div>
           <div class="control-row">
+            <label>두께(입체감) <span id="depthVal">0px</span></label>
+            <input type="range" id="depthRange" min="0" max="40" step="1" value="0">
+          </div>
+          <div class="control-row">
             <button class="btn btn-secondary" id="isoPresetBtn" type="button" style="padding:.5rem 1rem; font-size:.72rem;">아이소메트릭 각도로 맞추기</button>
           </div>
         </div>
@@ -730,6 +734,23 @@
   const rotateRange = document.getElementById('rotateRange');
   const rotateXRange = document.getElementById('rotateXRange');
   const rotateZRange = document.getElementById('rotateZRange');
+  const depthRange = document.getElementById('depthRange');
+
+  // currentColor를 어둡게 만들어서 "옆면" 색으로 사용 (같은 색 여러 겹 쌓아 두께를 표현)
+  function darken(hex, amount) {
+    const n = parseInt(hex.replace('#',''), 16);
+    const r = Math.max(0, (n >> 16) - amount);
+    const g = Math.max(0, ((n >> 8) & 0xff) - amount);
+    const b = Math.max(0, (n & 0xff) - amount);
+    return `rgb(${r},${g},${b})`;
+  }
+  function buildExtrudeShadow(depth, hex) {
+    if (depth <= 0) return 'none';
+    const sideColor = darken(hex, 60);
+    const layers = [];
+    for (let d = 1; d <= depth; d++) layers.push(`${d}px ${d}px 0 ${sideColor}`);
+    return layers.join(', ');
+  }
   const preview = document.getElementById('livePreview');
   const typeInput = document.getElementById('typeInput');
   typeInput.addEventListener('input', () => { typingEdited = true; });
@@ -744,6 +765,7 @@
     const rotate = rotateRange.value;
     const rotateX = rotateXRange.value;
     const rotateZ = rotateZRange.value;
+    const depth = +depthRange.value;
     const style = STYLE_SETS[currentLang][selectedSample];
 
     // 04 미리보기 글씨를 01 "폰트 미리보기 글씨" 입력값과 항상 동일하게 유지
@@ -756,11 +778,13 @@
     preview.style.fontSize = size + 'rem';
     preview.style.transform = `skewX(${-skew}deg) rotateY(${rotate}deg) rotateX(${rotateX}deg) rotateZ(${rotateZ}deg)`;
     preview.style.color = currentColor;
+    preview.style.textShadow = buildExtrudeShadow(depth, currentColor);
 
     document.getElementById('weightVal').textContent = weight;
     document.getElementById('sizeVal').textContent = size + 'rem';
     document.getElementById('rotateXVal').textContent = rotateX + '°';
     document.getElementById('rotateZVal').textContent = rotateZ + '°';
+    document.getElementById('depthVal').textContent = depth + 'px';
     document.getElementById('skewVal').textContent = skew + '°';
     document.getElementById('rotateVal').textContent = rotate + '°';
 
@@ -772,7 +796,7 @@
 
     styleChip.textContent = `초안${String(selectedSample).padStart(2,'0')} · ${style.label} · 굵기${weight} · ${currentColor}`;
   }
-  [weightRange, sizeRange, skewRange, rotateRange, rotateXRange, rotateZRange].forEach(r=>r.addEventListener('input', applyStyleEverywhere));
+  [weightRange, sizeRange, skewRange, rotateRange, rotateXRange, rotateZRange, depthRange].forEach(r=>r.addEventListener('input', applyStyleEverywhere));
 
   // 아이소메트릭 모드: X/Z축 컨트롤을 펼치고, 클릭 한 번으로 표준 아이소메트릭 각도(X:60° Z:45°)로 맞춤
   const isoToggleBtn = document.getElementById('isoToggleBtn');
@@ -788,6 +812,7 @@
     rotateXRange.value = 60;
     rotateZRange.value = 45;
     rotateRange.value = 0;
+    depthRange.value = 16;
     applyStyleEverywhere();
   });
 
