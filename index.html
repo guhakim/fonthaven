@@ -313,7 +313,10 @@
       <span class="mark">Font Haven</span>
       <span class="sub">폰트 천국</span>
     </div>
-    <div class="step-indicator">STEP <span id="stepNum">1</span>/7</div>
+    <div style="display:flex; align-items:center; gap:1rem;">
+      <div id="authArea"></div>
+      <div class="step-indicator">STEP <span id="stepNum">1</span>/7</div>
+    </div>
   </div>
 
   <div class="rail" id="rail">
@@ -900,4 +903,26 @@
 
   const promptBoxEl = document.getElementById('promptBox');
   if (promptBoxEl) promptBoxEl.addEventListener('input', applyStyleEverywhere);
+
+  // 구글 로그인 상태 확인 및 로그인/로그아웃 버튼 렌더링
+  async function renderAuth() {
+    const authArea = document.getElementById('authArea');
+    try {
+      const res = await fetch('/api/auth/me');
+      const data = await res.json();
+      if (data.loggedIn) {
+        authArea.innerHTML = `
+          <div style="display:flex; align-items:center; gap:.5rem; font-family:'IBM Plex Mono', monospace; font-size:.72rem; font-weight:700;">
+            ${data.picture ? `<img src="${data.picture}" style="width:1.6rem; height:1.6rem; border-radius:50%; border:2px solid #111;">` : ''}
+            <span>${data.name || data.email}</span>
+            <a href="/api/auth/logout" style="text-decoration:none; color:#111; border-bottom:2px solid #111;">로그아웃</a>
+          </div>`;
+      } else {
+        authArea.innerHTML = `<a href="/api/auth/google" class="btn btn-ghost" style="text-decoration:none; padding:.4rem .9rem; font-size:.72rem;">구글로 로그인</a>`;
+      }
+    } catch {
+      authArea.innerHTML = '';
+    }
+  }
+  renderAuth();
 </script>
